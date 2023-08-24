@@ -12,10 +12,12 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table
-public class CounselorBoard {
+public class CounselorBoard extends BaseEntity{
 
-    @Id
-    @OneToOne(mappedBy = "counselorNo")
+    @Id @GeneratedValue
+    private Long counselorBoardNo;
+
+    @OneToOne(mappedBy = "boardNo")
     private Counselor counselor;
 
     private String title;
@@ -25,10 +27,6 @@ public class CounselorBoard {
     private String counselingField;
 
     private int count;
-
-    private Date createdDate;
-
-    private Date modifiedDate;
 
     @Enumerated(value = EnumType.STRING)
     private BoardStatus status;

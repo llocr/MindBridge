@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table
-public class ClientBoard {
+public class ClientBoard extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientBoardNo;
@@ -24,12 +24,6 @@ public class ClientBoard {
     private String title;
 
     private String body;
-
-    private int count;
-
-    private Date createdDate;
-
-    private Date modifiedDate;
 
     @Enumerated(value = EnumType.STRING)
     private BoardStatus status;

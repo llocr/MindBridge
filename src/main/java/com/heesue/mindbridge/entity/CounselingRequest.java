@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,7 +16,7 @@ import java.util.Date;
 public class CounselingRequest {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long counRequestId;
+    private Long counselingRequestNo;
 
     @ManyToOne
     @JoinColumn(name = "clientNo")
@@ -25,10 +26,7 @@ public class CounselingRequest {
     @JoinColumn(name = "counselorNo")
     private Counselor counselor;
 
-    private Date applicationDate;
-
     private String description;
 
     private boolean accept;
-
 }

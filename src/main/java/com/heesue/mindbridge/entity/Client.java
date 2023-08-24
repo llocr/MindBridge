@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,14 +28,15 @@ public class Client {
 
     private Long studentNo;
 
-    @Enumerated(value = EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "majorNo")
     private Major major;
 
     private Date birth;
 
     private String address;
 
-    private Date enrollDate;
+    private LocalDateTime enrollDate;
 
     @OneToMany(mappedBy = "client")
     private List<CounselingRequest> counselingRequestList = new ArrayList<>();
