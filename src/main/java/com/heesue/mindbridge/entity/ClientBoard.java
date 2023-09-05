@@ -19,11 +19,11 @@ public class ClientBoard extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "clientNo")
-    private Client CBWriter;
+    private Client writer;
 
     private String title;
 
-    private String body;
+    private String content;
 
     @Enumerated(value = EnumType.STRING)
     private BoardStatus status;

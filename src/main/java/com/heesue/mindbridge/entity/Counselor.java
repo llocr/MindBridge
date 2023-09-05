@@ -28,13 +28,15 @@ public class Counselor {
 
     private Long studentNo;
 
+    private String email;
+
     private Date birth;
 
     private String description;
 
     private LocalDateTime enrollDate;
 
-    @OneToMany(mappedBy = "counselor")
+    @OneToMany(mappedBy = "counselor", fetch = FetchType.LAZY)
     private List<CounselingRequest> counselingRequestList = new ArrayList<>();
 
     @OneToOne

@@ -22,7 +22,7 @@ public class CounselorBoard extends BaseEntity{
 
     private String title;
 
-    private String body;
+    private String content;
 
     private String counselingField;
 
