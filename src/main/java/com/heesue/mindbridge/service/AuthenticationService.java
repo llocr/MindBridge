@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -29,7 +28,7 @@ public class AuthenticationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         log.info("로그인 요청 id : {}", id);
 
-        Client selectClient = clientRepository.findClientsById(id)
+        Client selectClient = clientRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("회원 정보가 존재하지 않습니다."));
 
         ClientDTO client = modelMapper.map(selectClient, ClientDTO.class);

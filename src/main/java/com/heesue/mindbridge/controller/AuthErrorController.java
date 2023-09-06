@@ -10,18 +10,4 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/error")
 public class AuthErrorController {
-
-    private final MessageSourceAccessor messageSourceAccessor;
-
-    @Autowired
-    public AuthErrorController(MessageSourceAccessor messageSourceAccessor) {
-        this.messageSourceAccessor = messageSourceAccessor;
-    }
-
-    @GetMapping("/login")
-    public String loginFailed(RedirectAttributes rttr) {
-        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("error.login"));
-
-        return "redirect:/member/login";
-    }
 }

@@ -1,6 +1,7 @@
 package com.heesue.mindbridge.DTO;
 
 import com.heesue.mindbridge.entity.Major;
+import com.heesue.mindbridge.entity.Role;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +32,10 @@ public class ClientDTO implements UserDetails {
     private Date birth;
 
     private String address;
+
+    private LocalDateTime enrollDate;
+
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

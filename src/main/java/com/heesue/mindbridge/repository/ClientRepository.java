@@ -14,16 +14,15 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {
+public interface ClientRepository extends JpaRepository<Client, String> {
 
 //    Client findClientsById(String id);
-    Optional<Client> findClientsById(String id);
+//    Optional<Client> findClientsById(String id);
 
-    Optional<Client> findByIdAndStudentNo(String id, Long studentNo);
-
-    boolean existsClientById(String id);
-
-    boolean existsClientByStudentNo(Long studentNo);
+//
+//    boolean existsClientById(String id);
+//
+//    boolean existsClientByStudentNo(Long studentNo);
 
 //    public void saveClient (Client client) {
 //        em.persist(client);

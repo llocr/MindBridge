@@ -4,6 +4,7 @@ import com.heesue.mindbridge.DTO.ClientDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.entity.Client;
 import com.heesue.mindbridge.entity.Major;
+import com.heesue.mindbridge.entity.Role;
 import com.heesue.mindbridge.repository.ClientRepository;
 import com.heesue.mindbridge.repository.MajorRepository;
 import org.modelmapper.ModelMapper;
@@ -38,43 +39,46 @@ public class ClientService {
         return majorList.stream().map(major -> modelMapper.map(major, MajorDTO.class)).collect(Collectors.toList());
     }
 
-    //겹치는 아이디 조회
-    private boolean validateDuplicateClientId(ClientDTO client) {
-        return clientRepository.existsClientById(client.getId());
-    }
-
-    //겹치는 학번 조회
-    private boolean validateDuplicateClientSudentNo(ClientDTO client) {
-        return clientRepository.existsClientByStudentNo(client.getStudentNo());
-    }
+//    //겹치는 아이디 조회
+//    private boolean validateDuplicateClientId(ClientDTO client) {
+//        return clientRepository.existsClientById(client.getId());
+//    }
+//
+//    //겹치는 학번 조회
+//    private boolean validateDuplicateClientSudentNo(ClientDTO client) {
+//        return clientRepository.existsClientByStudentNo(client.getStudentNo());
+//    }
 
     //회원가입
     @Transactional
-    public Long join(ClientDTO clientDTO) {
+    public String join(ClientDTO clientDTO) {
 
-        if(validateDuplicateClientId(clientDTO)) {
-            throw new IllegalStateException("이미 존재하는 아이디입니다.");
-        }
-        if (validateDuplicateClientSudentNo(clientDTO)) {
-            throw new IllegalStateException("이미 존재하는 학번입니다.");
-        }
+//        if(validateDuplicateClientId(clientDTO)) {
+//            throw new IllegalStateException("이미 존재하는 아이디입니다.");
+//        }
+//        if (validateDuplicateClientSudentNo(clientDTO)) {
+//            throw new IllegalStateException("이미 존재하는 학번입니다.");
+//        }
 
-//        Client client = modelMapper.map(clientDTO, Client.class);
+        clientDTO.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
+        clientDTO.setEnrollDate(LocalDateTime.now());
+        clientDTO.setRole(Role.CLIENT);
 
+        Client client = modelMapper.map(clientDTO, Client.class);
 
-        Client client = new Client(clientDTO.getId(),
-                            clientDTO.getPassword(),
-                            clientDTO.getName(),
-                            clientDTO.getStudentNo(),
-                            clientDTO.getEmail(),
-                            clientDTO.getMajor(),
-                            clientDTO.getBirth(),
-                            clientDTO.getAddress(),
-                            LocalDateTime.now());
+//        Client client = new Client(clientDTO.getId(),
+//                            clientDTO.getPassword(),
+//                            clientDTO.getName(),
+//                            clientDTO.getStudentNo(),
+//                            clientDTO.getEmail(),
+//                            clientDTO.getMajor(),
+//                            clientDTO.getBirth(),
+//                            clientDTO.getAddress(),
+//                            LocalDateTime.now());
 
-        client.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
+//        client.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
 
         clientRepository.save(client);
-        return client.getClientNo();
+        return client.getId();
     }
 }
