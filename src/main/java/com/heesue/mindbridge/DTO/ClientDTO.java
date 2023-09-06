@@ -5,16 +5,15 @@ import com.heesue.mindbridge.entity.Role;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
+import java.util.concurrent.Callable;
 
 @Getter @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class ClientDTO implements UserDetails {
     private String id;
 
@@ -37,9 +36,28 @@ public class ClientDTO implements UserDetails {
 
     private Role role;
 
+    public ClientDTO(String id, String password, String name, Long studentNo, String email, Major major, Date birth, String address, LocalDateTime enrollDate, Role role) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.studentNo = studentNo;
+        this.email = email;
+        this.major = major;
+        this.birth = birth;
+        this.address = address;
+        this.enrollDate = enrollDate;
+        this.role = role;
+    }
+
+    public ClientDTO() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<GrantedAuthority> roles = new HashSet<>();
+        roles.add(new SimpleGrantedAuthority(role.name()));
+
+        return roles;
     }
 
     @Override

@@ -3,17 +3,15 @@ package com.heesue.mindbridge.controller;
 import com.heesue.mindbridge.DTO.ClientDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.entity.Role;
+import com.heesue.mindbridge.service.AuthenticationService;
 import com.heesue.mindbridge.service.ClientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -23,7 +21,7 @@ import java.util.List;
 public class ClientController {
 
     private final ClientService clientService;
-//    private final MessageSourceAccessor messageSourceAccessor;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/join")
     public String createForm(){
@@ -43,11 +41,21 @@ public class ClientController {
     }
 
     @GetMapping("/login")
-    public void loginPage() {
+    public String loginPage() {
+        return "/client/login";
     }
 
-//    @GetMapping("/mypage")
-//    public void mypage(@AuthenticationPrincipal ClientDTO client) {
-//    }
+    @GetMapping("/myPage")
+    public String mypage() {
+        return "/client/myPage";
+    }
+
+    protected Authentication createNewAuthentication(Authentication currentAuth, String id) {
+        UserDetails newprincipal = authenticationService.loadUserByUsername(id);
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newprincipal, currentAuth.getCredentials(), newprincipal.getAuthorities());
+        newAuth.setDetails(currentAuth.getDetails());
+
+        return newAuth;
+    }
 
 }

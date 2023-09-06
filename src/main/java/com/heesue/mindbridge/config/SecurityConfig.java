@@ -40,25 +40,26 @@ public class SecurityConfig {
         // 권한에 따라 허용하는 url 설정
         // /login, /signup 페이지는 모두 허용, 다른 페이지는 인증된 사용자만 허용
         http.authorizeRequests()
-                .antMatchers("/index", "/client/**", "/css/**", "/js/**").permitAll()
+                .antMatchers("/index", "/client/join", "client/login" , "/css/**", "/js/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/client/myPage").hasRole("CLIENT")
                 .anyRequest().permitAll();
 
         // login 설정
         http.formLogin()
                 .loginPage("/client/login")    // GET 요청 (login form을 보여줌)
                 .defaultSuccessUrl("/")	// login에 성공하면 /로 redirect
-                .loginProcessingUrl("/client/new")    // POST 요청 (login 창에 입력한 데이터를 처리)
-                .usernameParameter("id")	// login에 필요한 id 값을 email로 설정 (default는 username)
+                .loginProcessingUrl("/client/login")    // POST 요청 (login 창에 입력한 데이터를 처리)
+                .usernameParameter("id")	// login에 필요한 id 값을 설정 (default는 username)
                 .passwordParameter("password")	// login에 필요한 password 값을 password(default)로 설정
-                .failureForwardUrl("/error/login"); //로그인 실패 시 랜딩 페이지
+                .failureForwardUrl("/client/login"); //로그인 실패 시 랜딩 페이지
 
         // logout 설정
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/client/logout"))
-                .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/");	// logout에 성공하면 /로 redirect
-
 
         return http.build();
     }

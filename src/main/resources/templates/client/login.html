@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>로그인 페이지</h1>
-    <form action="/client/login" method="post">
+    <form th:action="@{/client/login}" method="post">
         <div>
             <span>아이디 : </span>
             <input type="text" name="id">
@@ -23,7 +23,7 @@
     </form>
 
     <div class="btns">
-        <button id="join">회원가입</button>
+        <button onclick="location.href='/client/join'">회원가입</button>
         <button onclick="location.href='/'">돌아가기</button>
     </div>
 </body>

@@ -1,12 +1,9 @@
 window.onload = function () {
 
     if (document.getElementById("join")) {
-        const $regist = document.getElementById("regist");
-        $regist.onclick = function() {
+        const $join = document.getElementById("join");
+        $join.onclick = function() {
             location.href = "/client/join";
         }
     }
-
-
-
 }
