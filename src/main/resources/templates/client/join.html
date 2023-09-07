@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>회원가입</title>
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    <script type="text/javascript" th:src="@{/js/event.js}"></script>
+    <script type="text/javascript" th:src="@{/js/clientJoin.js}"></script>
 </head>
 <body>
   <h1>회원가입</h1>
@@ -56,7 +56,7 @@
         <input type="text" id="address" name="address" placeholder="주소를 입력하세요">
       </div>
       <br>
-      <button type="submit" id="registerBtn" disabled>회원가입하기</button>
+      <button type="submit" id="registerBtn">회원가입하기</button>
     </form>
 
   </div>
@@ -64,13 +64,13 @@
     fetch('/client/major')
             .then(res => res.json())
             .then(data => {
-              const $majorNo = document.getElementById('majorNo');
+              const $major = document.getElementById('major');
               for (let index in data) {
                 const major = data[index];
                 const $option = document.createElement('option');
                 $option.value = major.majorNo;
                 $option.textContent = major.name;
-                $majorNo.appendChild($option);
+                $major.appendChild($option);
               }
             });
   </script>

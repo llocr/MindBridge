@@ -5,6 +5,10 @@ window.onload = function () {
     // 학번 중복 확인 결과
     let isStudentNoValid = false;
 
+    const $registerBtn = document.getElementById("registerBtn");
+    $registerBtn.setAttribute("disabled", "disabled");
+
+
     //아이디 중복 검사
     if (document.getElementById("clientIdDup")) {
         const $clientIdDup = document.getElementById("clientIdDup");
@@ -32,6 +36,10 @@ window.onload = function () {
                     } else {
                         $idDupCheck1.style.display = "none";    // 아이디 사용 가능 메시지 숨기기
                         $idDupCheck2.style.display = "inline";  // 아이디 중복인 경우 보이기
+                    }
+
+                    if (isIdValid && isStudentNoValid) {
+                        $registerBtn.removeAttribute("disabled");
                     }
                 })
                 .catch(error => {
@@ -68,19 +76,14 @@ window.onload = function () {
                         $noDupCheck1.style.display = "none";    // 아이디 사용 가능 메시지 숨기기
                         $noDupCheck2.style.display = "inline";  // 아이디 중복인 경우 보이기
                     }
+
+                    if (isIdValid && isStudentNoValid) {
+                        $registerBtn.removeAttribute("disabled");
+                    }
                 })
                 .catch(error => {
                     console.error(error);
                 });
-        }
-    }
-
-    if (document.getElementById("registerBtn")) {
-        const $registerBtn = document.getElementById("registerBtn");
-        $registerBtn.onclick = function () {
-            if (isIdValid && isStudentNoValid) {
-                $registerBtn.removeAttribute("disabled");
-            }
         }
     }
 }

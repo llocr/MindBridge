@@ -49,7 +49,7 @@ public class ClientController {
         return result;
     }
 
-    @GetMapping(value = "major", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/major", produces = "application/json; charset=UTF-8")
     @ResponseBody
     public List<MajorDTO> findMajorList(){
         return clientService.findAllMajor();

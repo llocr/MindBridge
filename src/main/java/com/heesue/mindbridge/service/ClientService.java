@@ -52,14 +52,6 @@ public class ClientService {
     //회원가입
     @Transactional
     public String join(ClientDTO clientDTO) {
-
-//        if(validateDuplicateClientId(clientDTO)) {
-//            throw new IllegalStateException("이미 존재하는 아이디입니다.");
-//        }
-//        if (validateDuplicateClientSudentNo(clientDTO)) {
-//            throw new IllegalStateException("이미 존재하는 학번입니다.");
-//        }
-
         clientDTO.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
         clientDTO.setEnrollDate(LocalDateTime.now());
         clientDTO.setRole(Role.CLIENT);
