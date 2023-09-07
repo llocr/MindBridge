@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" th:src="@{/js/majorJoin.js}"></script>
+</head>
+<body>
+<h1>회원가입</h1>
+<div>
+  <form role="form" th:action="@{/major/join}" method="post">
+    <div class="form-group">
+      <label th:for="name">추가할 학과</label>
+      <input type="text" id="name" name="name" placeholder="추가할 학과를 입력하세요">
+      <button type="submit" id="majorDup">학과 중복 확인</button>
+        <span class="dup_check_1" id="major_dup_check_1">추가 가능한 학과입니다.</span>
+        <span class="dup_check_2" id="major_dup_check_2">이미 존재하는 학과입니다.</span>
+    </div>
+
+    <br>
+    <button type="submit" id="registerBtn" disabled>추가하기</button>
+  </form>
+</div>
+</body>
+</html>

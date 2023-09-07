@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @Entity
 @Table
 public class Major {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long majorNo;
 
     private String name;
