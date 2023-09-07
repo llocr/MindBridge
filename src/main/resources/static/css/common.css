@@ -1,0 +1,10 @@
+/*중복아이디가 없는 경우*/
+.dup_check_1{
+    color : green;
+    display : none;
+}
+/* 중복아이디 존재하는 경우 */
+.dup_check_2{
+    color : red;
+    display : none;
+}

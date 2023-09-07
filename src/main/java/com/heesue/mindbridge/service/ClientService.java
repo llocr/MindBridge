@@ -39,15 +39,15 @@ public class ClientService {
         return majorList.stream().map(major -> modelMapper.map(major, MajorDTO.class)).collect(Collectors.toList());
     }
 
-//    //겹치는 아이디 조회
-//    private boolean validateDuplicateClientId(ClientDTO client) {
-//        return clientRepository.existsClientById(client.getId());
-//    }
-//
-//    //겹치는 학번 조회
-//    private boolean validateDuplicateClientSudentNo(ClientDTO client) {
-//        return clientRepository.existsClientByStudentNo(client.getStudentNo());
-//    }
+    //겹치는 아이디 조회
+    public boolean validateDuplicateClientId(String id) {
+        return clientRepository.existsClientById(id);
+    }
+
+    //겹치는 학번 조회
+    public boolean validateDuplicateClientSudentNo(Long studentNo) {
+        return clientRepository.existsClientByStudentNo(studentNo);
+    }
 
     //회원가입
     @Transactional
@@ -65,18 +65,6 @@ public class ClientService {
         clientDTO.setRole(Role.CLIENT);
 
         Client client = modelMapper.map(clientDTO, Client.class);
-
-//        Client client = new Client(clientDTO.getId(),
-//                            clientDTO.getPassword(),
-//                            clientDTO.getName(),
-//                            clientDTO.getStudentNo(),
-//                            clientDTO.getEmail(),
-//                            clientDTO.getMajor(),
-//                            clientDTO.getBirth(),
-//                            clientDTO.getAddress(),
-//                            LocalDateTime.now());
-
-//        client.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
 
         clientRepository.save(client);
         return client.getId();

@@ -20,17 +20,12 @@ import java.util.List;
 @Table
 public class Client {
     @Id
-    @NotBlank(message = "아이디를 입력해주세요.")
     private String id;
 
-    @NotBlank(message = "비밀번호를 입력해주세요.")
     private String password;
 
-    @NotBlank(message = "이름을 입력해주세요.")
     private String name;
 
-    @NotNull(message = "학번을 입력해주세요.")
-    @Min(value = 1, message = "학번은 양수여야 합니다.")
     private Long studentNo;
 
     private String email;

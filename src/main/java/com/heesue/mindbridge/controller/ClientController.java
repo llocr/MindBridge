@@ -6,6 +6,7 @@ import com.heesue.mindbridge.entity.Role;
 import com.heesue.mindbridge.service.AuthenticationService;
 import com.heesue.mindbridge.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +33,20 @@ public class ClientController {
     public String registClient(@ModelAttribute ClientDTO clientDTO) {
         clientService.join(clientDTO);
         return "redirect:/";
+    }
+
+    @PostMapping("/clientIdDup")
+    @ResponseBody
+    public Boolean checkIdDuplication(@RequestBody ClientDTO clientDTO) {
+        boolean result = clientService.validateDuplicateClientId(clientDTO.getId());
+        return result;
+    }
+
+    @PostMapping("/clientNoDup")
+    @ResponseBody
+    public boolean checkNoDuplication(@RequestBody ClientDTO clientDTO) {
+        boolean result = clientService.validateDuplicateClientSudentNo(clientDTO.getStudentNo());
+        return result;
     }
 
     @GetMapping(value = "major", produces = "application/json; charset=UTF-8")
