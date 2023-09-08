@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>학과 리스트</title>
+</head>
+<body>
+    <h1>전체 학과 조회</h1>
+    <label>검색하기 : </label>
+    <form action="/major/list" method="post">
+        <input type="text" name="majorName" placeholder="검색할 학과를 입력해주세요!">
+        <button type="submit">클릭!</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>학과 번호</th>
+            <th>학과 이름</th>
+        </tr>
+        <tr th:each="major:${majorList}">
+            <td th:text="${major.majorNo}"></td>
+            <td th:text="${major.name}"></td>
+        </tr>
+    </table>
+    <div id="paging" >
+        <button
+                th:onclick="'location.href=\'/major/list?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ majorList.first }">
+            <<
+        </button>
+        <button
+                th:onclick="'location.href=\'/major/list?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ majorList.first }">
+            <
+        </button>
+        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/major/list?page=' + @{${page}} + '\''"
+                    th:text="${ page }"
+                    th:disabled="${ paging.currentPage eq page }">
+            </button>
+        </th:block>
+        <button
+                th:onclick="'location.href=\'/major/list?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ majorList.last }">
+            >
+        </button>
+        <button
+                th:onclick="'location.href=\'/major/list?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ majorList.last }">
+            >>
+        </button>
+    </div>
+    <button onclick="location.href='/'">메인화면으로 돌아가기</button>
+</body>
+</html>
