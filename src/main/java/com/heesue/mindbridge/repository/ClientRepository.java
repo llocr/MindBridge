@@ -5,6 +5,8 @@ import com.heesue.mindbridge.entity.Client;
 import com.heesue.mindbridge.entity.Major;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,20 +21,5 @@ public interface ClientRepository extends JpaRepository<Client, String> {
 
     boolean existsClientByStudentNo(Long studentNo);
 
-//    Client findClientsById(String id);
-//    Optional<Client> findClientsById(String id);
-
-//
-//    boolean existsClientById(String id);
-//
-//    boolean existsClientByStudentNo(Long studentNo);
-
-//    public void saveClient (Client client) {
-//        em.persist(client);
-//    }
-//
-//    public Client findOneClient(String id) {
-//        return em.find(Client.class, id);
-//    }
-
+    Page<Client> findClientByNameContaining(Pageable pageable, String clientName);
 }

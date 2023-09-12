@@ -2,15 +2,20 @@ package com.heesue.mindbridge.controller;
 
 import com.heesue.mindbridge.DTO.ClientDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
-import com.heesue.mindbridge.entity.Role;
+import com.heesue.mindbridge.common.Pagenation;
+import com.heesue.mindbridge.common.PagingButtonInfo;
 import com.heesue.mindbridge.service.AuthenticationService;
 import com.heesue.mindbridge.service.ClientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,6 +68,44 @@ public class ClientController {
     @GetMapping("/myPage")
     public String mypage() {
         return "/client/myPage";
+    }
+
+    @GetMapping("/list")
+    public String findAllClient(@PageableDefault Pageable pageable, Model model) {
+        Page<ClientDTO> clientList = clientService.findAllClient(pageable);
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(clientList);
+
+        model.addAttribute("paging", paging);
+        model.addAttribute("clientList", clientList);
+
+        return "/client/list";
+    }
+
+    @PostMapping("/list")
+    public String findSearchClient(@PageableDefault Pageable pageable, Model model, @RequestParam String clientName) {
+        Page<ClientDTO> searchList = clientService.findSearchClient(pageable, clientName);
+
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(searchList);
+
+        model.addAttribute("paging", paging);
+        model.addAttribute("clientList", searchList);
+
+        return "client/list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String modifyClientLoad(@PathVariable String id, Model model) {
+        ClientDTO client = clientService.findClientById(id);
+
+        model.addAttribute("client", client);
+
+        return "client/edit";
+    }
+
+    @PostMapping("/edit")
+    public String modifyClientSave(ClientDTO clientDTO ) {
+        clientService.modifyClient(clientDTO);
+        return "redirect:/";
     }
 
     protected Authentication createNewAuthentication(Authentication currentAuth, String id) {

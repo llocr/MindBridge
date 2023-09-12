@@ -38,6 +38,7 @@ public class ClientDTO implements UserDetails {
 
     private String address;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime enrollDate;
 
     private Role role;
