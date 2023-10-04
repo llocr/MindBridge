@@ -1,6 +1,7 @@
 package com.heesue.mindbridge.service;
 
 import com.heesue.mindbridge.DTO.ClientDTO;
+import com.heesue.mindbridge.DTO.LoginRequestDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.entity.Client;
 import com.heesue.mindbridge.entity.Major;
@@ -12,18 +13,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 public class ClientService {
+    private AuthenticationManager authenticationManager;
     private final ClientRepository clientRepository;
     private final MajorRepository majorRepository;
     private final ModelMapper modelMapper;
@@ -66,6 +72,13 @@ public class ClientService {
         return client.getId();
     }
 
+    //로그인
+//    public String login(String clinetId, String clientPassword) {
+//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(clinetId, clientPassword));
+//
+//        UserDetails clientDetails = clientRepository.loadClientBy
+//    }
+
     public Page<ClientDTO> findAllClient(Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
@@ -98,5 +111,17 @@ public class ClientService {
         Page<Client> searchList = clientRepository.findClientByNameContaining(pageable, clientName);
 
         return searchList.map(client -> modelMapper.map(client, ClientDTO.class));
+    }
+
+    public String login(LoginRequestDTO loginRequestDTO) {
+        String id = loginRequestDTO.getId();
+        String rawPassword = loginRequestDTO.getPassword();
+
+        Client byId = clientRepository.findById(id).orElseThrow(IllegalAccessError::new);
+
+        if(passwordEncoder.matches(rawPassword, byId.getPassword())) {
+            return "로그인 성공";
+        }
+        return "로그인 실패";
     }
 }

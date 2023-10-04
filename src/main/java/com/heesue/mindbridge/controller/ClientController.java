@@ -1,33 +1,42 @@
 package com.heesue.mindbridge.controller;
 
 import com.heesue.mindbridge.DTO.ClientDTO;
+import com.heesue.mindbridge.DTO.LoginRequestDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.common.Pagenation;
 import com.heesue.mindbridge.common.PagingButtonInfo;
-import com.heesue.mindbridge.service.AuthenticationService;
+import com.heesue.mindbridge.jwt.JwtTokenProvider;
+import com.heesue.mindbridge.repository.ClientRepository;
 import com.heesue.mindbridge.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
-@Controller
+@Slf4j
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/client")
 public class ClientController {
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final ClientRepository clientRepository;
 
     private final ClientService clientService;
-    private final AuthenticationService authenticationService;
 
     @GetMapping("/join")
     public String createForm(){
@@ -63,6 +72,17 @@ public class ClientController {
     @GetMapping("/login")
     public String loginPage() {
         return "/client/login";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        return clientService.login(loginRequestDTO);
+//        String userid = loginRequest.get("userid");
+//        String password = loginRequest.get("password");
+//
+//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userid, password));
+//
+//        UserDetails userDetails = clientRepository.load
     }
 
     @GetMapping("/myPage")
@@ -106,14 +126,6 @@ public class ClientController {
     public String modifyClientSave(ClientDTO clientDTO ) {
         clientService.modifyClient(clientDTO);
         return "redirect:/";
-    }
-
-    protected Authentication createNewAuthentication(Authentication currentAuth, String id) {
-        UserDetails newprincipal = authenticationService.loadUserByUsername(id);
-        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newprincipal, currentAuth.getCredentials(), newprincipal.getAuthorities());
-        newAuth.setDetails(currentAuth.getDetails());
-
-        return newAuth;
     }
 
 }
