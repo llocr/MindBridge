@@ -37,8 +37,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    //jwt
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+//    //jwt
+//    implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 tasks.named('test') {

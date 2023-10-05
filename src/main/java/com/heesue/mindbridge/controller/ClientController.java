@@ -5,7 +5,6 @@ import com.heesue.mindbridge.DTO.LoginRequestDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.common.Pagenation;
 import com.heesue.mindbridge.common.PagingButtonInfo;
-import com.heesue.mindbridge.jwt.JwtTokenProvider;
 import com.heesue.mindbridge.repository.ClientRepository;
 import com.heesue.mindbridge.service.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -13,27 +12,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserCache;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/client")
 public class ClientController {
-    private final JwtTokenProvider jwtTokenProvider;
-    private final AuthenticationManager authenticationManager;
     private final ClientRepository clientRepository;
 
     private final ClientService clientService;
@@ -74,16 +66,16 @@ public class ClientController {
         return "/client/login";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        return clientService.login(loginRequestDTO);
+//    @PostMapping("/login")
+//    public String login(@RequestBody LoginRequestDTO loginRequestDTO) {
+//        return clientService.login(loginRequestDTO);
 //        String userid = loginRequest.get("userid");
 //        String password = loginRequest.get("password");
 //
 //        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userid, password));
 //
 //        UserDetails userDetails = clientRepository.load
-    }
+//    }
 
     @GetMapping("/myPage")
     public String mypage() {

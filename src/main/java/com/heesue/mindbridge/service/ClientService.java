@@ -113,15 +113,15 @@ public class ClientService {
         return searchList.map(client -> modelMapper.map(client, ClientDTO.class));
     }
 
-    public String login(LoginRequestDTO loginRequestDTO) {
-        String id = loginRequestDTO.getId();
-        String rawPassword = loginRequestDTO.getPassword();
-
-        Client byId = clientRepository.findById(id).orElseThrow(IllegalAccessError::new);
-
-        if(passwordEncoder.matches(rawPassword, byId.getPassword())) {
-            return "로그인 성공";
-        }
-        return "로그인 실패";
-    }
+//    public String login(LoginRequestDTO loginRequestDTO) {
+//        String id = loginRequestDTO.getId();
+//        String rawPassword = loginRequestDTO.getPassword();
+//
+//        Client byId = clientRepository.findById(id).orElseThrow(IllegalAccessError::new);
+//
+//        if(passwordEncoder.matches(rawPassword, byId.getPassword())) {
+//            return "로그인 성공";
+//        }
+//        return "로그인 실패";
+//    }
 }

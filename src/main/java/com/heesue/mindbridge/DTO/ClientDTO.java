@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Getter @Setter
 @ToString
-public class ClientDTO implements UserDetails {
+public class ClientDTO {
     @NotBlank(message = "아이디를 입력해주세요.")
     private String id;
 
@@ -60,45 +60,4 @@ public class ClientDTO implements UserDetails {
     public ClientDTO() {
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(role.name()));
-
-        return roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return id;
-    }
-
-    // 계정 만료 여부
-    @Override
-    public boolean isAccountNonExpired() {
-        return true; // 만료되지 않음
-    }
-
-    // 계정 잠김 여부
-    @Override
-    public boolean isAccountNonLocked() {
-        return true; // 잠기지 않음
-    }
-
-    // 비밀번호 만료 여부
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true; // 만료되지 않음
-    }
-
-    // 계정 활성화 여부
-    @Override
-    public boolean isEnabled() {
-        return true; // 활성화
-    }
 }
