@@ -1,5 +1,5 @@
 package com.heesue.mindbridge.entity;
 
 public enum Role {
-    CLIENT, COUNSELOR, ADMIN
+    ROLE_CLIENT, ROLE_COUNSELOR, ROLE_ADMIN
 }

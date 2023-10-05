@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+</head>
+<body>
+    <h1>My Page</h1>
+    <th:block sec:authorize="isAuthenticated()">
+        <h3>아이디 : ${#authentication.principal.id}</h3>
+        <h3>이름 :  ${#authentication.principal.name}</h3>
+        <h3>성별 :  ${#authentication.principal.gender}</h3>
+        <h3>학번 :  ${#authentication.principal.studentNo}</h3>
+    </th:block>
+</body>
+</html>

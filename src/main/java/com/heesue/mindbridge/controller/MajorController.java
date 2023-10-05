@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.*;
 public class MajorController {
     private final MajorService majorService;
 
-    @GetMapping("/join")
-    public String createForm() {
-        return "/major/join";
-    }
+//    @GetMapping("/new")
+//    public String createForm() {
+//        return "/admin/major/create";
+//    }
 
-    @PostMapping("/join")
-    public String registMajor(@ModelAttribute MajorDTO majorDTO) {
+    @PostMapping("/new")
+    public String newMajor(@ModelAttribute MajorDTO majorDTO) {
         majorService.join(majorDTO);
-        return "redirect:/";
+        return "redirect:/major/list";
     }
 
     @PostMapping("/nameDup")
@@ -46,7 +46,7 @@ public class MajorController {
         model.addAttribute("paging", paging);
         model.addAttribute("majorList", majorList);
 
-        return "/major/list";
+        return "/admin/major/list";
     }
 
     @PostMapping("/list")
@@ -57,6 +57,6 @@ public class MajorController {
         model.addAttribute("paging", paging);
         model.addAttribute("majorList", searchList);
 
-        return "major/list";
+        return "/admin/major/list";
     }
 }

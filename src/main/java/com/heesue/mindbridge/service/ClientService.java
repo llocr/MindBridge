@@ -64,7 +64,7 @@ public class ClientService {
     public String join(ClientDTO clientDTO) {
         clientDTO.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
         clientDTO.setEnrollDate(LocalDateTime.now());
-        clientDTO.setRole(Role.CLIENT);
+        clientDTO.setRole(Role.ROLE_CLIENT);
 
         Client client = modelMapper.map(clientDTO, Client.class);
 

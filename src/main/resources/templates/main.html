@@ -1,22 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Mind Bridge</title>
 </head>
 <body>
-  <h1>Mind Bridge</h1>
-  <div>
-  <h3>일반 회원</h3>
-    <button onclick="location.href='/client/login'">로그인</button>
-    <button onclick="location.href='/client/join'">회원가입</button>
-  </div>
-  <div>
-      <h3>관리자</h3>
-      <button onclick="location.href='/major/join'">학과 추가</button>
-      <button onclick="location.href='/major/list'">전체 학과 리스트</button>
-      <button onclick="location.href='/client/list'">전체 회원 리스트</button>
-  </div>
-  </ol>
+    <h1>Mind Bridge</h1>
+
+    <!-- 인증된 사용자를 위한 버튼들 -->
+    <div>
+        <th:block sec:authorize="isAuthenticated()">
+            <button onclick="location.href='/member/mypage'">마이페이지</button>
+            <button onclick="location.href='/member/logout'">로그아웃</button>
+        </th:block>
+
+    </div>
+
+    <!-- 인증되지 않은 사용자를 위한 버튼들 -->
+    <div>
+        <th:block sec:authorize="isAnonymous()">
+            <button onclick="location.href='/login'">로그인</button>
+            <button onclick="location.href='/signin'">회원가입</button>
+        </th:block>
+    </div>
+
+    <!-- 관리자를 위한 버튼 -->
+    <div>
+        <th:block sec:authorize="hasRole('ADMIN')">
+            <button onclick="location.href='/admin/home'">관리자 메뉴</button>
+        </th:block>
+    </div>
+
 </body>
 </html>

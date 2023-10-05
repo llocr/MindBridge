@@ -10,22 +10,22 @@ window.onload = function () {
 
 
     //아이디 중복 검사
-    if (document.getElementById("clientIdDup")) {
-        const $clientIdDup = document.getElementById("clientIdDup");
+    if (document.getElementById("memberIdDup")) {
+        const $memberIdDup = document.getElementById("memberIdDup");
         const $idDupCheck1 = document.getElementById("id_dup_check_1");
         const $idDupCheck2 = document.getElementById("id_dup_check_2");
 
-        $clientIdDup.onclick = function (event) {
+        $memberIdDup.onclick = function (event) {
             event.preventDefault();
 
-            let clientId = document.getElementById("id").value.trim();
+            let memberId = document.getElementById("id").value.trim();
 
-            fetch("/client/clientIdDup", {
+            fetch("/memberIdDup", {
                 method: "POST",
                 headers: {
                     'Content-Type' : 'application/json;charset-UTF-8'
                 },
-                body: JSON.stringify({id:clientId})
+                body: JSON.stringify({id:memberId})
             })
                 .then(result => result.json())
                 .then(result => {
@@ -49,22 +49,22 @@ window.onload = function () {
     }
 
     //학번 중복 검사
-    if (document.getElementById("clientStudentNoDup")) {
-        const $clientNoDup = document.getElementById("clientStudentNoDup");
+    if (document.getElementById("memberNoDup")) {
+        const $memberNoDup = document.getElementById("memberNoDup");
         const $noDupCheck1 = document.getElementById("no_dup_check_1");
         const $noDupCheck2 = document.getElementById("no_dup_check_2");
 
-        $clientNoDup.onclick = function (event) {
+        $memberNoDup.onclick = function (event) {
             event.preventDefault();
 
-            let clientNo = document.getElementById("studentNo").value.trim();
+            let memberNo = document.getElementById("studentNo").value.trim();
 
-            fetch("/client/clientNoDup", {
+            fetch("/memberNoDup", {
                 method: "POST",
                 headers: {
                     'Content-Type' : 'application/json;charset-UTF-8'
                 },
-                body: JSON.stringify({studentNo:clientNo})
+                body: JSON.stringify({studentNo:memberNo})
             })
                 .then(result => result.json())
                 .then(result => {

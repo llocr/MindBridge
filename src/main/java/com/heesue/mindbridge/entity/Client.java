@@ -19,7 +19,7 @@ import java.util.*;
 @Setter
 @Entity
 @Table
-public class Client implements UserDetails {
+public class Client {
     @Id
     private String id;
 
@@ -45,42 +45,10 @@ public class Client implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-    private List<CounselingRequest> counselingRequestList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
-    private List<ClientBoard> boardList = new ArrayList<>();
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(role.name()));
-
-        return roles;
-    }
-
-    @Override
-    public String getUsername() {
-        return id;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
+//    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+//    private List<CounselingRequest> counselingRequestList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
+//    private List<ClientBoard> boardList = new ArrayList<>();
 }
