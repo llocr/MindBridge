@@ -11,6 +11,7 @@
     <!-- 인증된 사용자를 위한 버튼들 -->
     <div>
         <th:block sec:authorize="isAuthenticated()">
+            <h2><span th:text="${#authentication.principal.name}"></span>님 안녕하세요!</h2>
             <button onclick="location.href='/member/mypage'">마이페이지</button>
             <button onclick="location.href='/member/logout'">로그아웃</button>
         </th:block>

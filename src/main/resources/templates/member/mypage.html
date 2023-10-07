@@ -7,11 +7,13 @@
 </head>
 <body>
     <h1>My Page</h1>
-    <th:block sec:authorize="isAuthenticated()">
-        <h3>아이디 : ${#authentication.principal.id}</h3>
-        <h3>이름 :  ${#authentication.principal.name}</h3>
-        <h3>성별 :  ${#authentication.principal.gender}</h3>
-        <h3>학번 :  ${#authentication.principal.studentNo}</h3>
-    </th:block>
+    <div th:if="${#authentication}">
+        <h3>아이디: <span th:text="${#authentication.principal.username}"></span></h3>
+        <h3>이름: <span th:text="${#authentication.principal.name}"></span></h3>
+        <h3>성별: <span th:text="${#authentication.principal.gender}"></span></h3>
+        <h3>학번: <span th:text="${#authentication.principal.studentNo}"></span></h3>
+        <h3>학과: <span th:text="${#authentication.principal.major.name}"></span></h3>
+    </div>
+    <button onclick="location.href='/'">돌아가기</button>
 </body>
 </html>

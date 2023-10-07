@@ -4,10 +4,13 @@ import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.DTO.Member.MemberDTO;
 import com.heesue.mindbridge.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller

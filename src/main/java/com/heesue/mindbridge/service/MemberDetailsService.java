@@ -19,18 +19,17 @@ public class MemberDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        Member member = memberRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-
-        return toUserDetails(member);
+        return memberRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
     }
 
-    private UserDetails toUserDetails(Member member) {
-        return User.builder()
-                .username(member.getId())
-                .password(member.getPassword())
-                .authorities(new SimpleGrantedAuthority(member.getRole().toString()))
-                .build();
-    }
+
+//    private UserDetails toUserDetails(Member member) {
+//        return User.builder()
+//                .username(member.getId())
+//                .password(member.getPassword())
+//                .authorities(new SimpleGrantedAuthority(member.getRole().toString()))
+//                .build();
+//    }
 }
 
 
