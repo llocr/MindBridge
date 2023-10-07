@@ -10,7 +10,7 @@
     <div th:if="${#authentication}">
         <h3>아이디: <span th:text="${#authentication.principal.username}"></span></h3>
         <h3>이름: <span th:text="${#authentication.principal.name}"></span></h3>
-        <h3>성별: <span th:text="${#authentication.principal.gender}"></span></h3>
+        <h3>성별: <span th:text="${#authentication.principal.gender.value}"></span></h3>
         <h3>학번: <span th:text="${#authentication.principal.studentNo}"></span></h3>
         <h3>학과: <span th:text="${#authentication.principal.major.name}"></span></h3>
     </div>
