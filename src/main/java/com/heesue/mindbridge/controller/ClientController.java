@@ -1,7 +1,6 @@
 package com.heesue.mindbridge.controller;
 
 import com.heesue.mindbridge.DTO.ClientDTO;
-import com.heesue.mindbridge.DTO.LoginRequestDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.common.Pagenation;
 import com.heesue.mindbridge.common.PagingButtonInfo;
@@ -12,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

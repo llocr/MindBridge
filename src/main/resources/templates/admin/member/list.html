@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>전체 회원 리스트</title>
+</head>
+<body>
+    <h1>전체 회원 조회</h1>
+    <label>검색하기 : </label>
+    <form action="/admin/member/search" method="get">
+        <input type="text" name="memberName" placeholder="검색할 이름을 입력해주세요!">
+        <button type="submit">클릭!</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>학과</th>
+            <th>학번</th>
+            <th>생년월일</th>
+            <th>성별</th>
+            <th>주소</th>
+            <th>이메일</th>
+            <th>권한</th>
+            <th>수정하기</th>
+        </tr>
+        <tr th:each="member:${memberList}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.name}"></td>
+            <td th:text="${member.major.name}"></td>
+            <td th:text="${member.studentNo}"></td>
+            <td th:text="${member.birth}"></td>
+            <td th:text="${member.gender.getValue()}"></td>
+            <td th:text="${member.address}"></td>
+            <td th:text="${member.email}"></td>
+            <td th:text="${member.role.getValue()}"></td>
+            <!--<td>
+                <a th:href="@{'/admin/member/edit/' + ${member.id}}">수정하기</a>
+            </td>-->
+        </tr>
+    </table>
+    <div id="paging" >
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ memberList.first }">
+            <<
+        </button>
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ memberList.first }">
+            <
+        </button>
+        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/admin/member/list?page=' + @{${page}} + '\''"
+                    th:text="${ page }"
+                    th:disabled="${ paging.currentPage eq page }">
+            </button>
+        </th:block>
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ memberList.last }">
+            >
+        </button>
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ memberList.last }">
+            >>
+        </button>
+    </div>
+    <button onclick="location.href='/admin/home'">돌아가기</button>
+
+</body>
+</html>

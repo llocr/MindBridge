@@ -1,7 +1,10 @@
 package com.heesue.mindbridge.service;
 
+import com.heesue.mindbridge.DTO.ClientDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.DTO.Member.MemberDTO;
+import com.heesue.mindbridge.DTO.Member.MemberListDTO;
+import com.heesue.mindbridge.entity.Client;
 import com.heesue.mindbridge.entity.Major;
 import com.heesue.mindbridge.entity.Member;
 import com.heesue.mindbridge.entity.Role;
@@ -9,6 +12,9 @@ import com.heesue.mindbridge.repository.MajorRepository;
 import com.heesue.mindbridge.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,4 +66,25 @@ public class MemberService {
     }
 
 
+    public Page<MemberListDTO> findAllMember(Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("name"));
+
+        Page<Member> memberList = memberRespository.findAll(pageable);
+
+        return memberList.map(member -> modelMapper.map(member, MemberListDTO.class));
+    }
+
+    public Page<MemberListDTO> findSearchMember(Pageable pageable, String memberName) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("name"));
+
+        Page<Member> memberList = memberRespository.findMemberByNameContaining(pageable, memberName);
+
+
+        return memberList.map(member -> modelMapper.map(member, MemberListDTO.class));
+
+    }
 }
