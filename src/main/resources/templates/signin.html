@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/common.css}">
@@ -33,6 +34,7 @@
         <label><input type="radio" name="gender" value="F">여자</label>
         <label><input type="radio" name="gender" value="M">남자</label>
         <label><input type="radio" name="gender" value="N">선택없음</label>
+      </div>
 
       <div class="form-group">
         <label th:for="studentNo">학번</label>

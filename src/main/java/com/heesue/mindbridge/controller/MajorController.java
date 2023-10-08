@@ -14,22 +14,21 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/major")
 public class MajorController {
     private final MajorService majorService;
 
-//    @GetMapping("/new")
-//    public String createForm() {
-//        return "/admin/major/create";
-//    }
-
-    @PostMapping("/new")
-    public String newMajor(@ModelAttribute MajorDTO majorDTO) {
-        majorService.join(majorDTO);
-        return "redirect:/major/list";
+    @GetMapping("/admin/major/new")
+    public String createForm() {
+        return "/admin/major/new";
     }
 
-    @PostMapping("/nameDup")
+    @PostMapping("/admin/major/new")
+    public String newMajor(@ModelAttribute MajorDTO majorDTO) {
+        majorService.join(majorDTO);
+        return "redirect:/admin/major/list";
+    }
+
+    @PostMapping("/major/nameDup")
     @ResponseBody
     public boolean checkNameDuplication(@RequestBody MajorDTO majorDTO) {
         boolean result = majorService.validateDuplicateName(majorDTO.getName());
@@ -37,7 +36,7 @@ public class MajorController {
         return  result;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/admin/major/list")
     public String findAllMajor(@PageableDefault Pageable pageable, Model model) {
 
         Page<MajorDTO> majorList = majorService.findAllMajor(pageable);
@@ -49,7 +48,7 @@ public class MajorController {
         return "/admin/major/list";
     }
 
-    @PostMapping("/list")
+    @PostMapping("/admin/major/list")
     public String findSearchMajor(@PageableDefault Pageable pageable, Model model, @RequestParam String majorName) {
         Page<MajorDTO> searchList = majorService.findSearchMajor(pageable, majorName);
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(searchList);

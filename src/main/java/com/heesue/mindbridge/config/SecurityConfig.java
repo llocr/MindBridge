@@ -18,11 +18,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        // 정적 리소스들이 보안필터를 거치지 않게끔
-        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/font/**");
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        // 정적 리소스들이 보안필터를 거치지 않게끔
+//        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/font/**");
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -32,10 +32,11 @@ public class SecurityConfig {
                 .headers().frameOptions().disable();        // x frame 방어 해제
 
         http.authorizeRequests()
+                .antMatchers("/css/**", "/js/**", "/img/**", "/font/**").permitAll()
+                .antMatchers("/login", "/signin", "/").permitAll() // 로그인 및 회원가입은 모든 사용자에게 허용
                 .antMatchers("/admin/**").hasRole("ADMIN") // 관리자 권한을 요구하는 경로
                 .antMatchers("/member/**").hasRole("CLIENT") // 회원 권한을 요구하는 경로
-                .antMatchers("/login", "/signin", "/").permitAll() // 로그인 및 회원가입은 모든 사용자에게 허용
-                .anyRequest().authenticated(); // 그 외의 모든 요청은 인증된 사용자만 접근 가능하도록 설정
+                .anyRequest().permitAll(); // 그 외의 모든 요청은 인증된 사용자만 접근 가능하도록 설정
 
 
         http.formLogin()

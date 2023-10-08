@@ -23,7 +23,7 @@ window.onload = function () {
             fetch("/memberIdDup", {
                 method: "POST",
                 headers: {
-                    'Content-Type' : 'application/json;charset-UTF-8'
+                    'Content-Type' : 'application/json;charset=UTF-8'
                 },
                 body: JSON.stringify({id:memberId})
             })
@@ -62,7 +62,7 @@ window.onload = function () {
             fetch("/memberNoDup", {
                 method: "POST",
                 headers: {
-                    'Content-Type' : 'application/json;charset-UTF-8'
+                    'Content-Type' : 'application/json;charset=UTF-8'
                 },
                 body: JSON.stringify({studentNo:memberNo})
             })
