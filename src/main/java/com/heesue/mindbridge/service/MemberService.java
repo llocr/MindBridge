@@ -65,7 +65,7 @@ public class MemberService {
         return member.getId();
     }
 
-
+    //멤버 리스트 조회
     public Page<MemberListDTO> findAllMember(Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
@@ -76,6 +76,7 @@ public class MemberService {
         return memberList.map(member -> modelMapper.map(member, MemberListDTO.class));
     }
 
+    //검색 멤버 조회
     public Page<MemberListDTO> findSearchMember(Pageable pageable, String memberName) {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
@@ -86,5 +87,13 @@ public class MemberService {
 
         return memberList.map(member -> modelMapper.map(member, MemberListDTO.class));
 
+    }
+
+    //회원 정보 수정
+    @Transactional
+    public void editMember(MemberDTO memberDTO) {
+        Member member = memberRespository.findById(memberDTO.getId()).orElseThrow(IllegalAccessError::new);
+
+        modelMapper.map(memberDTO, member);
     }
 }

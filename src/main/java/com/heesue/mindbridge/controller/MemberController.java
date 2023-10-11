@@ -5,6 +5,7 @@ import com.heesue.mindbridge.DTO.Member.MemberDTO;
 import com.heesue.mindbridge.DTO.Member.MemberListDTO;
 import com.heesue.mindbridge.common.Pagenation;
 import com.heesue.mindbridge.common.PagingButtonInfo;
+import com.heesue.mindbridge.service.MajorService;
 import com.heesue.mindbridge.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final MajorService majorService;
 
     //로그인 페이지
     @GetMapping(value = "/login")
@@ -64,6 +66,29 @@ public class MemberController {
     //마이페이지
     @GetMapping("/member/mypage")
     public void mypage(@AuthenticationPrincipal MemberDTO memberDTO) {}
+
+    //수정할 회원 정보 로딩
+    @GetMapping("/member/edit")
+    public String getMemberInfo(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
+        List<MajorDTO> majorList = majorService.getAllMajors();
+
+        model.addAttribute("majorList", majorList);
+        model.addAttribute("member", memberDTO);
+
+        return "member/edit";
+    }
+
+    //회원 정보 수정
+    @PostMapping("member/edit")
+    public String editMember(MemberDTO memberDTO) {
+        try {
+            memberService.editMember(memberDTO);
+        }catch (Exception e) {
+            return "member/edit";
+        }
+
+        return "redirect:member/mypage";
+    }
 
     //멤버 리스트 보기
     @GetMapping("/admin/member/list")

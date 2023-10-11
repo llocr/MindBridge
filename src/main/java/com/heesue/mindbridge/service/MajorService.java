@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -54,5 +55,13 @@ public class MajorService {
         Page<Major> searchList = majorRepository.findMajorByNameContaining(pageable, majorName);
 
         return searchList.map(major -> modelMapper.map(major, MajorDTO.class));
+    }
+
+    public List<MajorDTO> getAllMajors() {
+        List<Major> majorList = majorRepository.findAll();
+
+        return majorList.stream()
+                .map(major -> modelMapper.map(major, MajorDTO.class))
+                .collect(Collectors.toList());
     }
 }
