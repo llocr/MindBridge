@@ -17,17 +17,20 @@ import org.springframework.web.bind.annotation.*;
 public class MajorController {
     private final MajorService majorService;
 
+    //새 학과 추가 폼
     @GetMapping("/admin/major/new")
     public String createForm() {
         return "/admin/major/new";
     }
 
+    //새 학과 추가
     @PostMapping("/admin/major/new")
     public String newMajor(@ModelAttribute MajorDTO majorDTO) {
         majorService.join(majorDTO);
         return "redirect:/admin/major/list";
     }
 
+    //학과 중복 확인
     @PostMapping("/major/nameDup")
     @ResponseBody
     public boolean checkNameDuplication(@RequestBody MajorDTO majorDTO) {
@@ -36,6 +39,7 @@ public class MajorController {
         return  result;
     }
 
+    //전체 학과 리스트
     @GetMapping("/admin/major/list")
     public String findAllMajor(@PageableDefault Pageable pageable, Model model) {
 
@@ -48,7 +52,7 @@ public class MajorController {
         return "/admin/major/list";
     }
 
-    @PostMapping("/admin/major/list")
+    @PostMapping("/admin/major/search")
     public String findSearchMajor(@PageableDefault Pageable pageable, Model model, @RequestParam String majorName) {
         Page<MajorDTO> searchList = majorService.findSearchMajor(pageable, majorName);
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(searchList);

@@ -7,8 +7,9 @@
 </head>
 <body>
     <h1>전체 회원 조회</h1>
-    <label>검색하기 : </label>
+
     <form action="/admin/member/search" method="get">
+        <label>검색하기 : </label>
         <input type="text" name="memberName" placeholder="검색할 이름을 입력해주세요!">
         <button type="submit">클릭!</button>
     </form>
@@ -24,7 +25,6 @@
             <th>주소</th>
             <th>이메일</th>
             <th>권한</th>
-            <th>수정하기</th>
         </tr>
         <tr th:each="member:${memberList}">
             <td th:text="${member.id}"></td>
@@ -36,9 +36,6 @@
             <td th:text="${member.address}"></td>
             <td th:text="${member.email}"></td>
             <td th:text="${member.role.getValue()}"></td>
-            <!--<td>
-                <a th:href="@{'/admin/member/edit/' + ${member.id}}">수정하기</a>
-            </td>-->
         </tr>
     </table>
     <div id="paging" >
