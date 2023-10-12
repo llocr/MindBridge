@@ -14,7 +14,7 @@
         <h3>학번: <span th:text="${#authentication.principal.studentNo}"></span></h3>
         <h3>학과: <span th:text="${#authentication.principal.major.name}"></span></h3>
         <h3>이메일: <span th:text="${#authentication.principal.email}"></span></h3>
-        <h3>생년월일: <span th:text="${#authentication.principal.birth}"></span></h3>
+        <h3>생년월일: <span th:text="${#dates.format(#authentication.principal.birth, 'yyyy-MM-dd')}"></span></h3>
         <h3>주소: <span th:text="${#authentication.principal.address}"></span></h3>
     </div>
     <button onclick="location.href='/'">돌아가기</button>
