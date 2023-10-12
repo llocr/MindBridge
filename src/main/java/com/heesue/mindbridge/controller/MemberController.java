@@ -87,7 +87,7 @@ public class MemberController {
             return "member/edit";
         }
 
-        return "redirect:member/mypage";
+        return "redirect:/member/mypage";
     }
 
     //멤버 리스트 보기

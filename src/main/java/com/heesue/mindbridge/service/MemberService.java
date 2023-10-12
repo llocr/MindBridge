@@ -94,6 +94,12 @@ public class MemberService {
     public void editMember(MemberDTO memberDTO) {
         Member member = memberRespository.findById(memberDTO.getId()).orElseThrow(IllegalAccessError::new);
 
-        modelMapper.map(memberDTO, member);
+        member.setName(memberDTO.getName());
+        member.setMajor(memberDTO.getMajor());
+        member.setEmail(memberDTO.getEmail());
+        member.setBirth(memberDTO.getBirth());
+        member.setAddress(memberDTO.getAddress());
+
+//        modelMapper.map(memberDTO, member);
     }
 }
