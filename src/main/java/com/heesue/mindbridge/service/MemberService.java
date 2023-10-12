@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,6 +103,16 @@ public class MemberService {
         member.setBirth(memberDTO.getBirth());
         member.setAddress(memberDTO.getAddress());
 
-//        modelMapper.map(memberDTO, member);
+        updateSecurityContext(member);
+    }
+
+    //세션 정보 업데이트
+    private void updateSecurityContext(Member member) {
+        Authentication updatedauthentication = new UsernamePasswordAuthenticationToken(
+                member,
+                null,
+                member.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(updatedauthentication);
     }
 }
