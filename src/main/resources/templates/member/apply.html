@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Counselor Apply</title>
+</head>
+<body>
+  <h1>상담사 자격 신청</h1>
+  <form role="form" th:action="@{/member/apply}" method="post">
+    <div>
+        <label th:for="clubCheck">또래상담동아리 소속인가요?</label>
+        <label><input type="radio" name="clubCheck" th:value="true">예</label>
+        <label><input type="radio" name="clubCheck" th:value="false">아니오</label>
+    </div>
+
+    <div>
+        <label th:for="description">자기 소개</label>
+        <textarea name="description" placeholder="간단하게 자신을 소개하는 글을 작성해주세요. (3~5줄)"></textarea>
+    </div>
+      <button type="submit">신청하기</button>
+  </form>
+</body>
+</html>

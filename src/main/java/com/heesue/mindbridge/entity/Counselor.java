@@ -24,9 +24,10 @@ public class Counselor {
     @JoinColumn(name = "id")
     private Member counselorId;
 
-    private String description;
-
     private Boolean clubCheck;
+
+    @Lob
+    private String description;
 
     private Boolean accept = false;
 
