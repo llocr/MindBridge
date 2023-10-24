@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>상담사 신청 리스트</title>
+</head>
+<body>
+    <h1>상담사 신청 리스트</h1>
+    <table>
+        <tr>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>신청 상태</th>
+            <th>신청 일시</th>
+            <th>자세히 보기</th>
+        </tr>
+        <tr th:each="counselor:${counselorList}">
+            <td th:text="${counselor.counselorId.id}"></td>
+            <td th:text="${counselor.counselorId.name}"></td>
+            <td th:text="${counselor.approvalStatus.description}"></td>
+            <td th:text="${#temporals.format(counselor.appliedDateTime, 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
+            <td>
+                <button th:onclick="'window.location.href=\'/admin/counselor/' + ${counselor.counselorNo} + '\''">자세히 보기</button>
+            </td>
+        </tr>
+    </table>
+    <div id="paging" >
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ counselorList.first }">
+            <<
+        </button>
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ counselorList.first }">
+            <
+        </button>
+        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/admin/member/list?page=' + @{${page}} + '\''"
+                    th:text="${ page }"
+                    th:disabled="${ paging.currentPage eq page }">
+            </button>
+        </th:block>
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ counselorList.last }">
+            >
+        </button>
+        <button
+                th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ counselorList.last }">
+            >>
+        </button>
+    </div>
+    <button onclick="location.href='/admin/home'">뒤로가기</button>
+</body>
+</html>

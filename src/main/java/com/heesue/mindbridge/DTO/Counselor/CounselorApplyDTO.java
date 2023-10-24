@@ -1,4 +1,4 @@
-package com.heesue.mindbridge.DTO;
+package com.heesue.mindbridge.DTO.Counselor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

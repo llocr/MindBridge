@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>상담사 자격 신청 세부 정보</title>
+</head>
+<body>
+  <h1 th:text="${counselor.counselorId.name} + ' 상담사 자격 신청 세부 정보'"></h1>
+  <div>
+    <h3>상담자 번호 : <span th:text="${counselor.counselorNo}"/></h3>
+    <h3>자격 신청 일시 : <span th:text="${#temporals.format(counselor.appliedDateTime, 'yyyy년 MM월 dd일 HH:mm:ss')}"/></h3>
+    <h3>자격 신청 상태 : <span th:text="${counselor.approvalStatus}"/></h3>
+    <h3>아이디 : <span th:text="${counselor.counselorId.id}"/></h3>
+    <h3>이름 : <span th:text="${counselor.counselorId.name}"/></h3>
+    <h3>학번 : <span th:text="${counselor.counselorId.studentNo}"/></h3>
+    <h3>학과 : <span th:text="${counselor.counselorId.major.name}"/></h3>
+    <h3>이메일 : <span th:text="${counselor.counselorId.email}"/></h3>
+    <h3>생년월일 : <span th:text="${counselor.counselorId.birth}"/></h3>
+    <h3>아이디 : <span th:text="${counselor.counselorId.id}"/></h3>
+    <h3>또래상담동아리 가입 : <span th:text="${counselor.clubCheck}"/></h3>
+    <div>
+      <h3>자기 소개</h3>
+      <span th:text="${counselor.description}"></span>
+    </div>
+    <div>
+      <form th:action="@{'/admin/counselor/accept/' + ${counselor.counselorNo}}" method="post">
+        <input type="submit" value="수락" class="accept-btn">
+      </form>
+      <form th:action="@{'/admin/counselor/reject/' + ${counselor.counselorNo}}" method="post">
+        <input type="submit" value="거절" class="reject-btn">
+      </form>
+      <button onclick="location.href='/admin/counselor/apply'">뒤로가기</button>
+    </div>
+  </div>
+
+ <!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let acceptButtons = document.querySelectorAll('.accept-btn');
+      let rejectButtons = document.querySelectorAll('.reject-btn');
+
+      acceptButtons.forEach((btn, index) => {
+        btn.addEventListener('click', function() {
+          rejectButtons[index].disabled = true;
+          btn.disabled = true;
+        });
+      });
+
+      rejectButtons.forEach((btn, index) => {
+        btn.addEventListener('click', function() {
+          acceptButtons[index].disabled = true;
+          btn.disabled = true;
+        });
+      });
+    });
+  </script>-->
+</body>
+</html>

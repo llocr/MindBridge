@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -21,7 +20,7 @@ public class Counselor {
     private Long counselorNo;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id", unique = true)
     private Member counselorId;
 
     private Boolean clubCheck;
@@ -30,7 +29,10 @@ public class Counselor {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private Boolean accept;
+    @Enumerated(EnumType.STRING)
+    private ApprovalStatus approvalStatus;
+
+    private LocalDateTime appliedDateTime;
 
     @OneToMany(mappedBy = "counselor", fetch = FetchType.LAZY)
     private List<CounselingRequest> counselingRequestList = new ArrayList<>();
