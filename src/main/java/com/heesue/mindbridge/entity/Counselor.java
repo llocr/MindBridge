@@ -27,9 +27,10 @@ public class Counselor {
     private Boolean clubCheck;
 
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    private Boolean accept = false;
+    private Boolean accept;
 
     @OneToMany(mappedBy = "counselor", fetch = FetchType.LAZY)
     private List<CounselingRequest> counselingRequestList = new ArrayList<>();
