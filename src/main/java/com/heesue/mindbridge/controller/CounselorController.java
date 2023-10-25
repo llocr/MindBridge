@@ -71,7 +71,9 @@ public class CounselorController {
 
     //상담사 자격 신청 거절
     @PostMapping("/admin/counselor/reject/{counselorNo}")
-    public void rejectCounselor(@PathVariable Long counselorNo) {
+    public String rejectCounselor(@PathVariable Long counselorNo) {
         counselorService.rejectCounselor(counselorNo);
+
+        return "redirect:/admin/counselor/apply";
     }
 }
