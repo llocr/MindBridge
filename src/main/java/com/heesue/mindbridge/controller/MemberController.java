@@ -62,7 +62,7 @@ public class MemberController {
 
     //마이페이지
     @GetMapping("/member/mypage")
-    public void mypage(@AuthenticationPrincipal MemberDTO memberDTO) {}
+    public void mypage(@AuthenticationPrincipal MemberListDTO memberListDTO) {}
 
     //수정할 회원 정보 로딩
     @GetMapping("/member/edit")
