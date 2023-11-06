@@ -18,7 +18,7 @@
         <tr th:each="counselor:${counselorList}">
             <td th:text="${counselor.counselorId.id}"></td>
             <td th:text="${counselor.counselorId.name}"></td>
-            <td th:text="${counselor.approvalStatus.description}"></td>
+            <td th:text="${counselor.approvalStatus.value}"></td>
             <td th:text="${#temporals.format(counselor.appliedDateTime, 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
             <td>
                 <button th:onclick="'window.location.href=\'/admin/counselor/' + ${counselor.counselorNo} + '\''">자세히 보기</button>

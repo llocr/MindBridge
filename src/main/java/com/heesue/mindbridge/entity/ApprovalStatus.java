@@ -5,13 +5,13 @@ public enum ApprovalStatus {
     ACCEPTED("수락"),
     REJECTED("거절");
 
-    private final String description;
+    private final String value;
 
     ApprovalStatus(String description) {
-        this.description = description;
+        this.value = description;
     }
 
-    public String getDescription() {
-        return description;
+    public String getValue() {
+        return value;
     }
 }
