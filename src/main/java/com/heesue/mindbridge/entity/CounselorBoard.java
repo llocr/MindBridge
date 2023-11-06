@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -20,9 +19,12 @@ public class CounselorBoard extends BaseEntity{
     @OneToOne(mappedBy = "boardNo")
     private Counselor counselor;
 
+    //제목
     private String title;
 
+    //내용
     private String content;
 
+    //사용하는 상담기법
     private String counselingField;
 }
