@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .antMatchers("/login", "/signin", "/").permitAll() // 로그인 및 회원가입은 모든 사용자에게 허용
                 .antMatchers("/admin/**").hasRole("ADMIN") // 관리자 권한을 요구하는 경로
                 .antMatchers("/member/**").hasAnyRole("ADMIN", "CLIENT") // 회원 권한을 요구하는 경로
+                .antMatchers("/counselor/**").hasAnyRole("ADMIN", "COUNSELOR")
                 .anyRequest().permitAll(); // 그 외의 모든 요청은 인증된 사용자만 접근 가능하도록 설정
 
 
