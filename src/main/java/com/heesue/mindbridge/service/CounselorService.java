@@ -2,10 +2,9 @@ package com.heesue.mindbridge.service;
 
 import com.heesue.mindbridge.DTO.Counselor.CounselorApplyDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorViewDTO;
-import com.heesue.mindbridge.entity.ApprovalStatus;
-import com.heesue.mindbridge.entity.Counselor;
-import com.heesue.mindbridge.entity.Member;
-import com.heesue.mindbridge.entity.Role;
+import com.heesue.mindbridge.DTO.CounselorBoard.CounselorBoardDTO;
+import com.heesue.mindbridge.entity.*;
+import com.heesue.mindbridge.repository.CounselorBoardRepository;
 import com.heesue.mindbridge.repository.CounselorRepository;
 import com.heesue.mindbridge.repository.MemberRepository;
 import lombok.AllArgsConstructor;
@@ -25,6 +24,7 @@ import java.time.LocalDateTime;
 @Transactional(readOnly = true)
 public class CounselorService {
     private final CounselorRepository counselorRepository;
+    private final CounselorBoardRepository counselorBoardRepository;
     private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
 
@@ -89,5 +89,24 @@ public class CounselorService {
                 .orElseThrow(() -> new RuntimeException("Find Counselor not found"));
 
         findCounselor.setApprovalStatus(ApprovalStatus.REJECTED);
+    }
+
+    @Transactional
+    //상담사 정보 입력
+    public void writeCounselorDetails(CounselorBoardDTO counselorBoardDTO, Principal loggedMember) {
+        CounselorBoard counselorBoard = modelMapper.map(counselorBoardDTO, CounselorBoard.class);
+
+        String loggedMemberId = loggedMember.getName();
+        Member member = memberRepository.findById(loggedMemberId)
+                .orElseThrow(() -> new RuntimeException("Find Member not found"));
+        Counselor counselor = counselorRepository.findByCounselorId(member)
+                .orElseThrow(() -> new RuntimeException("Counselor not found"));
+
+
+        counselorBoard.setCounselor(counselor);
+        counselorBoard.setCount(0L);
+        counselorBoard.setStatus(BoardStatus.PUBLISHED);
+
+        counselorBoardRepository.save(counselorBoard);
     }
 }

@@ -23,6 +23,8 @@ public class CounselorBoard extends BaseEntity{
     private String title;
 
     //내용
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     //사용하는 상담기법

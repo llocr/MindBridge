@@ -23,6 +23,12 @@
         </th:block>
     </div>
 
+    <div>
+        <th:block sec:authorize="hasRole('COUNSELOR')">
+            <button onclick="location.href='/counselor/details'">상담사 정보 작성</button>
+        </th:block>
+    </div>
+
     <!-- 인증되지 않은 사용자를 위한 버튼들 -->
     <div>
         <th:block sec:authorize="isAnonymous()">

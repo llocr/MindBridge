@@ -2,6 +2,7 @@ package com.heesue.mindbridge.controller;
 
 import com.heesue.mindbridge.DTO.Counselor.CounselorApplyDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorViewDTO;
+import com.heesue.mindbridge.DTO.CounselorBoard.CounselorBoardDTO;
 import com.heesue.mindbridge.common.Pagenation;
 import com.heesue.mindbridge.common.PagingButtonInfo;
 import com.heesue.mindbridge.entity.Member;
@@ -76,4 +77,19 @@ public class CounselorController {
 
         return "redirect:/admin/counselor/apply";
     }
+
+    //상담사 정보 입력 페이지
+    @GetMapping("/counselor/details")
+    public String creatDetailsForm() {
+        return "/counselor/details";
+    }
+
+    //상담자 정보 입력
+    @PostMapping("/counselor/details")
+    public String writeCounselorDetails(@ModelAttribute CounselorBoardDTO counselorBoardDTO, Principal loggedMember) {
+        counselorService.writeCounselorDetails(counselorBoardDTO, loggedMember);
+
+        return "redirect:/";
+    }
+
 }
