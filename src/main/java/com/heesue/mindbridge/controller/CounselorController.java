@@ -34,7 +34,7 @@ public class CounselorController {
     //상담사 자격 신청
     @PostMapping("/member/apply")
     public String counselorApply(@ModelAttribute CounselorApplyDTO counselorApplyDTO, Principal loggedMember) {
-        Member applyCounselor = counselorService.newCounselorApply(counselorApplyDTO, loggedMember);
+        counselorService.newCounselorApply(counselorApplyDTO, loggedMember);
 
         return "redirect:/";
     }

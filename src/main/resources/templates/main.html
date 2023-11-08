@@ -4,6 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Mind Bridge</title>
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: space-between;
+        }
+        .card {
+            flex: 0 0 30%; /* 각 카드의 기본 너비를 30%로 설정 */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Mind Bridge</h1>
@@ -44,5 +60,13 @@
         </th:block>
     </div>
 
+    <h2>상담자 정보</h2>
+    <div class="card-container">
+        <div th:each="counselor : ${counselorList}" class="card">
+            <h3 th:text="${counselor.boardNo.title}">제목</h3>
+            <p th:text="${counselor.counselorId.name}">이름</p>
+            <p th:text="${counselor.boardNo.content}">내용</p>
+        </div>
+    </div>
 </body>
 </html>

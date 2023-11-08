@@ -1,6 +1,7 @@
 package com.heesue.mindbridge.service;
 
 import com.heesue.mindbridge.DTO.Counselor.CounselorApplyDTO;
+import com.heesue.mindbridge.DTO.Counselor.CounselorMainViewDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorViewDTO;
 import com.heesue.mindbridge.DTO.CounselorBoard.CounselorBoardDTO;
 import com.heesue.mindbridge.entity.*;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -108,5 +111,17 @@ public class CounselorService {
         counselorBoard.setStatus(BoardStatus.PUBLISHED);
 
         counselorBoardRepository.save(counselorBoard);
+
+        counselor.setBoardNo(counselorBoard);
+    }
+
+    public List<CounselorMainViewDTO> getAllCounselorDetails() {
+        List<Counselor> counselorBoardList = counselorRepository.findByBoardNoIsNotNull();
+
+        List<CounselorMainViewDTO> counselorList = counselorBoardList.stream()
+                .map(counselor -> modelMapper.map(counselor, CounselorMainViewDTO.class))
+                .collect(Collectors.toList());
+
+        return counselorList;
     }
 }
