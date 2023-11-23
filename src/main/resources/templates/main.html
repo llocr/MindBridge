@@ -70,9 +70,10 @@
 
     <h2>상담자 정보</h2>
     <div class="card-container">
-        <div th:each="counselor : ${counselorList}" class="card">
+        <div th:each="counselor : ${counselorList}" class="card"
+             th:onclick="'window.location.href=\'/member/counselor/details/' + ${counselor.boardNo.counselorBoardNo} + '\''">
             <h3 th:text="${counselor.boardNo.title}">제목</h3>
-            <p th:text="${counselor.counselorId.name}">뭉이</p>
+            <p th:text="${counselor.counselorId.name}">이름</p>
             <p th:text="${counselor.boardNo.content}">내용</p>
         </div>
     </div>
