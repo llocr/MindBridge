@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상담자 정보 상세보기</title>
+</head>
+<body>
+  <div>
+    <h1>상담자 정보</h1>
+    <h2 th:text="${counselor.title}">Title</h2>
+    <div>
+      <h3>개인정보</h3>
+      <p>이름 : <span th:text="${counselor.name}"/></p>
+      <p>성별 : <span th:text="${counselor.gender}"/></p>
+      <p>학과 : <span th:text="${counselor.major}"/></p>
+    </div>
+    <div>
+      <h3>사용기법</h3>
+      <p th:text="${counselor.counselingField}"></p>
+    </div>
+    <div>
+      <h3>소개</h3>
+      <p th:text="${counselor.content}"></p>
+    </div>
+  </div>
+  <button onclick="location.href='/main'">뒤로가기</button>
+</body>
+</html>

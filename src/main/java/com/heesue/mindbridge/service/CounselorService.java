@@ -1,6 +1,7 @@
 package com.heesue.mindbridge.service;
 
 import com.heesue.mindbridge.DTO.Counselor.CounselorApplyDTO;
+import com.heesue.mindbridge.DTO.Counselor.CounselorDetailsDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorMainViewDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorViewDTO;
 import com.heesue.mindbridge.DTO.CounselorBoard.CounselorBoardDTO;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -115,6 +117,7 @@ public class CounselorService {
         counselor.setBoardNo(counselorBoard);
     }
 
+    //상담자 매인 정보 가져오기
     public List<CounselorMainViewDTO> getAllCounselorDetails() {
         List<Counselor> counselorBoardList = counselorRepository.findByBoardNoIsNotNull();
 
@@ -123,5 +126,24 @@ public class CounselorService {
                 .collect(Collectors.toList());
 
         return counselorList;
+    }
+
+    //상담자 상세 정보 가져오기
+    public CounselorDetailsDTO getCounselorDetails(Long counselorBoardNo) {
+        CounselorDetailsDTO counselor = new CounselorDetailsDTO();
+        CounselorBoard counselorBoard = counselorBoardRepository.findById(counselorBoardNo)
+                .orElseThrow(() -> new RuntimeException("Counselor not found"));
+
+        Member member = memberRepository.findById(counselorBoard.getCounselor().getCounselorId().getId())
+                .orElseThrow(() -> new RuntimeException("Find Member not found"));
+
+        counselor.setName(member.getName());
+        counselor.setGender(member.getGender().getValue());
+        counselor.setMajor(member.getMajor().getName());
+        counselor.setTitle(counselorBoard.getTitle());
+        counselor.setContent(counselorBoard.getContent());
+        counselor.setCounselingField(counselorBoard.getCounselingField());
+
+        return counselor;
     }
 }
