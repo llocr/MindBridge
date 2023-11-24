@@ -8,6 +8,9 @@
   <div>
     <h1>상담자 정보</h1>
     <h2 th:text="${counselor.title}">Title</h2>
+    <p>개시 날짜 : <span th:text="${counselor.createdDate}"/></p>
+    <p>마지막 수정 날짜 : <span th:text="${counselor.lastModifiedDate}"/></p>
+    <p>조회수 : <span th:text="${counselor.count}"/>회</p>
     <div>
       <h3>개인정보</h3>
       <p>이름 : <span th:text="${counselor.name}"/></p>

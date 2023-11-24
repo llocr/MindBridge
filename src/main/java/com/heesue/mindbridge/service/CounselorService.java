@@ -129,6 +129,7 @@ public class CounselorService {
     }
 
     //상담자 상세 정보 가져오기
+    @Transactional
     public CounselorDetailsDTO getCounselorDetails(Long counselorBoardNo) {
         CounselorDetailsDTO counselor = new CounselorDetailsDTO();
         CounselorBoard counselorBoard = counselorBoardRepository.findById(counselorBoardNo)
@@ -137,12 +138,19 @@ public class CounselorService {
         Member member = memberRepository.findById(counselorBoard.getCounselor().getCounselorId().getId())
                 .orElseThrow(() -> new RuntimeException("Find Member not found"));
 
+        //게시물 카운트 증가
+        counselorBoard.setCount(counselorBoard.getCount() + 1);
+
+        //dto에 정보 입력
         counselor.setName(member.getName());
         counselor.setGender(member.getGender().getValue());
         counselor.setMajor(member.getMajor().getName());
         counselor.setTitle(counselorBoard.getTitle());
         counselor.setContent(counselorBoard.getContent());
         counselor.setCounselingField(counselorBoard.getCounselingField());
+        counselor.setCount(counselorBoard.getCount());
+        counselor.setCreatedDate(counselorBoard.getCreatedDate());
+        counselor.setLastModifiedDate(counselorBoard.getLastModifiedDate());
 
         return counselor;
     }
