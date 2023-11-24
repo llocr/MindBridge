@@ -94,12 +94,12 @@ public class CounselorController {
     }
 
     //상담자 정보 상세보기
-    @GetMapping("/member/counselor/details/{counselorBoardNo}")
+    @GetMapping("/main/counselor/details/{counselorBoardNo}")
     public String showCounselorDetails(@PathVariable Long counselorBoardNo, Model model) {
         CounselorDetailsDTO counselor = counselorService.getCounselorDetails(counselorBoardNo);
 
         model.addAttribute("counselor", counselor);
-        return "member/counselor/details";
+        return "main/counselor/details";
     }
 
 }
