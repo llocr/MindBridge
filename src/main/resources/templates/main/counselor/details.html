@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>상담자 정보 상세보기</title>
@@ -27,5 +28,12 @@
     </div>
   </div>
   <button onclick="location.href='/main'">뒤로가기</button>
+
+  <!-- 인증된 사용자를 위한 버튼 -->
+  <div>
+    <th:block sec:authorize="isAuthenticated()">
+      <button th:onclick="'location.href=\'/client/request/' + ${counselorBoardNo} + '\''">상담 신청하기</button>
+    </th:block>
+  </div>
 </body>
 </html>
