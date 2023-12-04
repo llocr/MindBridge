@@ -1,6 +1,5 @@
 package com.heesue.mindbridge.repository;
 
-import com.heesue.mindbridge.entity.Client;
 import com.heesue.mindbridge.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

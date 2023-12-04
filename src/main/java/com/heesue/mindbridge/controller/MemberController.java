@@ -67,9 +67,6 @@ public class MemberController {
     //수정할 회원 정보 로딩
     @GetMapping("/member/edit")
     public String getMemberInfo(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
-        List<MajorDTO> majorList = majorService.getAllMajors();
-
-        model.addAttribute("majorList", majorList);
         model.addAttribute("member", memberDTO);
 
         return "member/edit";
@@ -120,5 +117,4 @@ public class MemberController {
     public List<MajorDTO> findMajorList() {
         return memberService.findAllMajor();
     }
-
 }
