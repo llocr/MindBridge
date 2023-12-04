@@ -16,4 +16,6 @@ public interface CounselorRepository extends JpaRepository<Counselor, Long> {
     Optional<Counselor> findByCounselorId(Member member);
 
     List<Counselor> findByBoardNoIsNotNull();
+
+    Optional<Counselor> findByBoardNo_CounselorBoardNo(Long counselorBoardNo);
 }
