@@ -49,6 +49,8 @@
   </div>
   <button onclick="location.href='/'">돌아가기</button>
     <script>
+        const currentMajorNo = [[${#authentication.principal.major.majorNo}]];
+
         fetch('/majorList')
             .then(res => res.json())
             .then(data => {
@@ -58,6 +60,11 @@
                     const $option = document.createElement('option');
                     $option.value = major.majorNo;
                     $option.textContent = major.name;
+
+                    if(major.majorNo === currentMajorNo) {
+                        $option.selected = true;
+                    }
+
                     $major.appendChild($option);
                 }
             });
