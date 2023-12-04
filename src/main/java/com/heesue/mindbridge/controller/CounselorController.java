@@ -1,6 +1,7 @@
 package com.heesue.mindbridge.controller;
 
 import com.heesue.mindbridge.DTO.Counselor.CounselorApplyDTO;
+import com.heesue.mindbridge.DTO.Counselor.CounselorDetailsDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorViewDTO;
 import com.heesue.mindbridge.DTO.CounselorBoard.CounselorBoardDTO;
 import com.heesue.mindbridge.common.Pagenation;
@@ -90,6 +91,15 @@ public class CounselorController {
         counselorService.writeCounselorDetails(counselorBoardDTO, loggedMember);
 
         return "redirect:/";
+    }
+
+    //상담자 정보 상세보기
+    @GetMapping("/main/counselor/details/{counselorBoardNo}")
+    public String showCounselorDetails(@PathVariable Long counselorBoardNo, Model model) {
+        CounselorDetailsDTO counselor = counselorService.getCounselorDetails(counselorBoardNo);
+
+        model.addAttribute("counselor", counselor);
+        return "main/counselor/details";
     }
 
 }

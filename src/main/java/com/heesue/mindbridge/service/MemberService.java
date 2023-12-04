@@ -1,10 +1,8 @@
 package com.heesue.mindbridge.service;
 
-import com.heesue.mindbridge.DTO.ClientDTO;
 import com.heesue.mindbridge.DTO.MajorDTO;
 import com.heesue.mindbridge.DTO.Member.MemberDTO;
 import com.heesue.mindbridge.DTO.Member.MemberListDTO;
-import com.heesue.mindbridge.entity.Client;
 import com.heesue.mindbridge.entity.Major;
 import com.heesue.mindbridge.entity.Member;
 import com.heesue.mindbridge.entity.Role;
@@ -32,7 +30,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class MemberService {
     private final MajorRepository majorRepository;
-    private final MemberRepository memberRespository;
+    private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -45,12 +43,12 @@ public class MemberService {
 
     //겹치는 아이디 조회
     public boolean validateDuplicateId(String id) {
-        return memberRespository.existsMemberById(id);
+        return memberRepository.existsMemberById(id);
     }
 
     //겹치는 학번 조회
     public boolean validateDuplicateStudentNo(Long studentNo) {
-        return memberRespository.existsMemberByStudentNo(studentNo);
+        return memberRepository.existsMemberByStudentNo(studentNo);
     }
 
     //회원가입
@@ -63,7 +61,7 @@ public class MemberService {
         member.setEnrollDate(LocalDateTime.now());
         member.setRole(Role.ROLE_CLIENT);
 
-        memberRespository.save(member);
+        memberRepository.save(member);
 
         return member.getId();
     }
@@ -74,7 +72,7 @@ public class MemberService {
                 pageable.getPageSize(),
                 Sort.by("name"));
 
-        Page<Member> memberList = memberRespository.findAll(pageable);
+        Page<Member> memberList = memberRepository.findAll(pageable);
 
         return memberList.map(member -> modelMapper.map(member, MemberListDTO.class));
     }
@@ -85,7 +83,7 @@ public class MemberService {
                 pageable.getPageSize(),
                 Sort.by("name"));
 
-        Page<Member> memberList = memberRespository.findMemberByNameContaining(pageable, memberName);
+        Page<Member> memberList = memberRepository.findMemberByNameContaining(pageable, memberName);
 
 
         return memberList.map(member -> modelMapper.map(member, MemberListDTO.class));
@@ -95,7 +93,7 @@ public class MemberService {
     //회원 정보 수정
     @Transactional
     public void editMember(MemberDTO memberDTO) {
-        Member member = memberRespository.findById(memberDTO.getId()).orElseThrow(IllegalAccessError::new);
+        Member member = memberRepository.findById(memberDTO.getId()).orElseThrow(IllegalAccessError::new);
 
         member.setName(memberDTO.getName());
         member.setMajor(memberDTO.getMajor());

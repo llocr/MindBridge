@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>상담 신청하기</title>
+</head>
+<body>
+    <h1>상담 신청하기</h1>
+        <form role="form" th:action="@{/client/request}" method="post">
+        <div>
+            <h2>비밀보장 원칙에 동의하십니까?</h2>
+            <label><input type="radio" name="nda" value="true" required>동의</label> <!-- Non-Disclosure Agreement -->
+            <p>상담의 모든 내용은 비밀보장 원칙에 의해 예외 사항이 아닌 경우 외부로 발설되지 않습니다.
+                (예외사항 : 상담자가 슈퍼바이저에게 지도를 받는 경우 / 법원의 명령에 따라 정보를 공개해야만 하는 경우 / 내담자 및 타인에게 위해를 가할 가능성이 있는 경우 (자살위기 등) / 다른 기관과 연계해 내담자를 도와야 하는 경우)</p>
+            <p><b>** 비밀보장 원칙에 동의하지 않으실 경우, 상담에 제약이 있을 수 있습니다.</b></p>
+
+        </div>
+        <div>
+            <h2>유의사항에 동의하십니까?</h2>
+            <label><input type="radio" name="notice" value="true" required>동의</label>
+            <p>상담을 진행하는 상담자들은 현재 상담심리학과 재학생으로, 아직 전문적인 수련 과정이 이루어 지지 않은 상태입니다. 따라서 상담 내용에 따라 교내 학생상담센터로 방문을 권장하거나, 상담이 어려워질 수 있습니다. 이에 유의하시어 상담자의 미숙한 부분이 보이더라도 양해 부탁드리겠습니다.</p>
+        </div>
+        <hr>
+        <div>
+            <h2>개인정보 입력</h2>
+            <div>
+                <div>
+                    <label th:for="name">이름</label>
+                    <input type="text" id="name" name="name" th:value="${#authentication.principal.name}" placeholder="이름을 입력하세요.">
+                </div>
+                <div>
+                    <label th:for="grade">학년</label>
+                    <label><input type="radio" name="grade" th:value="1">1학년</label>
+                    <label><input type="radio" name="grade" th:value="2">2학년</label>
+                    <label><input type="radio" name="grade" th:value="3">3학년</label>
+                    <label><input type="radio" name="grade" th:value="4">4학년</label>
+                    <label><input type="radio" name="grade" th:value="5">5학년 이상</label>
+                </div>
+                <div>
+                    <label th:for="phone">전화번호 (상담자와 연락할 수 있는 전화번호를 입력해 주세요.)</label>
+                    <input type="tel" name="phone">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <h2>호소 문제</h2>
+            <div>
+                <label th:for="category">상담하고자 하는 고민 유형을 선택해 주세요.</label>
+                <div>
+                <label><input type="checkbox" name="category" value="적응">적응</label>
+                <label><input type="checkbox" name="category" value="학업">학업</label>
+                <label><input type="checkbox" name="category" value="진로">진로</label>
+                <label><input type="checkbox" name="category" value="대인관계">대인관계</label>
+                <label><input type="checkbox" name="category" value="이성교제">이성교제</label>
+                <label><input type="checkbox" name="category" value="성">성</label><br>
+                <label><input type="checkbox" name="category" value="가정">가정</label>
+                <label><input type="checkbox" name="category" value="성격">성격</label>
+                <label><input type="checkbox" name="category" value="정서">정서</label>
+                <label><input type="checkbox" name="category" value="행동및습관">행동 및 습관</label>
+                <label><input type="checkbox" name="category" value="경제적곤란및생활">경제적 곤란 및 생활</label>
+                </div>
+            </div>
+            <div>
+                <label th:for="description">상담하고자 하는 고민에 대하여 간단하게 작성해 주세요.</label>
+                <br>
+                <textarea name="description" placeholder="고민에 대해서 작성해주세요."></textarea>
+            </div>
+        </div>
+            <h2>상담 희망 날짜</h2>
+            <div>
+                <label th:for="time">상담이 가능한 요일과 시간을 알려 주세요. (최소 두 가지)</label>
+                <br>
+                <input type="text" name="time" placeholder="상담이 가능한 요일과 시간을 입력해 주세요.">
+            </div>
+        </div>
+        <div>
+            <h2>상담 희망 방식</h2>
+            <div>
+                <label th:for="process">원하시는 상담 방식을 선택해 주세요.</label>
+                <div>
+                    <label><input type="checkbox" name="process" value="대면">대면</label><br>
+                    <label><input type="checkbox" name="process" value="전화">전화</label><br>
+                    <label><input type="checkbox" name="process" value="화상">화상</label><br>
+                    <label><input type="checkbox" name="process" value="채팅">채팅</label><br>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="hidden" name="counselorBoardNo" th:value="${counselorBoardNo}">
+        </div>
+        <br>
+        <button type="submit">제출하기</button>
+    </form>
+</body>
+</html>
