@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>상담 신청 확인</title>
+</head>
+<body>
+  <h1>상담 신청 정보</h1>
+  <p>신청 일시 : <span th:text="${#temporals.format(request.appliedDateTime, 'yyyy년 MM월 dd일 HH:mm:ss')}"/></p>
+  <div>
+    <h3>내담자 정보</h3>
+    <p>이름 : <span th:text="${request.member.name}"/></p>
+    <p>아이디 : <span th:text="${request.member.id}"/></p>
+    <p>성별 : <span th:text="${request.member.gender.getValue()}"/></p>
+    <p>학과 : <span th:text="${request.member.major.getName()}"/></p>
+    <p>학년 : <span th:text="${request.grade}"/>학년</p>
+    <p>전화번호 : <span th:text="${request.phone}"/></p>
+  </div>
+  <hr>
+  <div>
+    <h3>호소 문제</h3>
+    <p>고민 유형 : <span th:text="${request.category}"/></p>
+    <b>고민 설명</b>
+    <p th:text="${request.description}"/>
+  </div>
+  <hr>
+  <div>
+    <h3>상담 일정</h3>
+    <p>상담 희망 시간 : <span th:text="${request.time}"/></p>
+    <p>상담 방식 : <span th:text="${request.process}"/></p>
+  </div>
+
+  <!-- 인증된 사용자를 위한 버튼 -->
+  <div>
+    <button>상담 수락</button>
+    <button>상담 거절</button>
+  </div>
+  <hr>
+  <button onclick="location.href='/counselor/client'">뒤로가기</button>
+</body>
+</html>

@@ -1,12 +1,13 @@
 package com.heesue.mindbridge.controller;
 
+import com.heesue.mindbridge.DTO.CounselingRequest.CounselingRequestDetailsDTO;
+import com.heesue.mindbridge.DTO.CounselingRequest.CounselingRequestListDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorApplyDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorDetailsDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorViewDTO;
 import com.heesue.mindbridge.DTO.CounselorBoard.CounselorBoardDTO;
 import com.heesue.mindbridge.common.Pagenation;
 import com.heesue.mindbridge.common.PagingButtonInfo;
-import com.heesue.mindbridge.entity.Member;
 import com.heesue.mindbridge.service.CounselorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -110,6 +111,30 @@ public class CounselorController {
 
         model.addAttribute("counselor", counselor);
         return "main/counselor/details";
+    }
+
+    // 신규 상담 신청 리스트 확인
+    @GetMapping("/counselor/client")
+    public String viewCounselingRequestList(@PageableDefault Pageable pageable, Principal loggedMember, Model model) {
+
+        Page<CounselingRequestListDTO> counselingRequestList = counselorService.getCounselingRequestList(loggedMember, pageable);
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(counselingRequestList);
+
+        model.addAttribute("paging", paging);
+        model.addAttribute("requestList", counselingRequestList);
+
+        return "/counselor/client";
+    }
+
+    // 상담 신청 상세 보기
+    @GetMapping("/counselor/request/{counselingRequestNo}")
+    public String viewCounselingRequestDetails(@PathVariable Long counselingRequestNo, Model model) {
+
+        CounselingRequestDetailsDTO counselingRequest = counselorService.getCounselingRequestDetails(counselingRequestNo);
+
+        model.addAttribute("request", counselingRequest);
+
+        return "/counselor/request/details";
     }
 
 }

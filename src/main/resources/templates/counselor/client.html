@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>상담 신청서 확인</title>
+</head>
+<body>
+  <h1>상담 신청서 확인</h1>
+  <table>
+    <tr>
+      <th>상담 번호</th>
+      <th>이름</th>
+      <th>상담 카테고리</th>
+      <th>신청 일시</th>
+      <th>자세히 보기</th>
+    </tr>
+    <tr th:each="request:${requestList}">
+      <td th:text="${request.counselingRequestNo}"></td>
+      <td th:text="${request.name}"></td>
+      <td th:text="${request.category}"></td>
+      <td th:text="${#temporals.format(request.appliedDateTime, 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
+      <td>
+        <button th:onclick="'window.location.href=\'/counselor/request/' + ${request.counselingRequestNo} + '\''">자세히 보기</button>
+      </td>
+    </tr>
+  </table>
+
+  <div id="paging" >
+    <button
+            th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.startPage}} + '\''"
+            th:disabled="${ requestList.first }">
+      <<
+    </button>
+    <button
+            th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.currentPage - 1}} + '\''"
+            th:disabled="${ requestList.first }">
+      <
+    </button>
+    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+      <button th:onclick="'location.href=\'/admin/member/list?page=' + @{${page}} + '\''"
+              th:text="${ page }"
+              th:disabled="${ paging.currentPage eq page }">
+      </button>
+    </th:block>
+    <button
+            th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.currentPage + 1}} + '\''"
+            th:disabled="${ requestList.last }">
+      >
+    </button>
+    <button
+            th:onclick="'location.href=\'/admin/member/list?page=' + @{${paging.endPage}} + '\''"
+            th:disabled="${ requestList.last }">
+      >>
+    </button>
+  </div>
+  <button onclick="location.href='/client/home'">뒤로가기</button>
+</body>
+</html>

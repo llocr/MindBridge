@@ -1,5 +1,7 @@
 package com.heesue.mindbridge.service;
 
+import com.heesue.mindbridge.DTO.CounselingRequest.CounselingRequestDetailsDTO;
+import com.heesue.mindbridge.DTO.CounselingRequest.CounselingRequestListDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorApplyDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorDetailsDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorMainViewDTO;
@@ -22,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,8 +72,7 @@ public class CounselorService {
         Counselor findCounselor = counselorRepository.findById(counselorNo)
                 .orElseThrow(() -> new RuntimeException("Find Counselor not found"));
 
-        return modelMapper.map(findCounselor,
-                CounselorViewDTO.class);
+        return modelMapper.map(findCounselor, CounselorViewDTO.class);
     }
 
     //상담 자격 신청 수락
@@ -163,5 +163,28 @@ public class CounselorService {
         Long count = counselingRequestRepository.countByCounselorAndStatus(counselor, ApprovalStatus.PENDING);
 
         return count;
+    }
+
+    // 신규 상담 신청 리스트 확인
+    public Page<CounselingRequestListDTO> getCounselingRequestList(Principal loggedMember, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("appliedDateTime"));
+
+        String loggedMemberId = loggedMember.getName();
+        Counselor counselor = counselorRepository.findByMemberId(loggedMemberId)
+                .orElseThrow(() -> new RuntimeException("Counselor not found"));
+
+        Page<CounselingRequest> requestList = counselingRequestRepository.findByCounselorAndStatus(counselor, ApprovalStatus.PENDING, pageable);
+
+        return requestList.map(counselingRequest -> modelMapper.map(counselingRequest, CounselingRequestListDTO.class));
+    }
+
+    // 상담 신청 세부 내용 확인
+    public CounselingRequestDetailsDTO getCounselingRequestDetails(Long counselingRequestNo) {
+        CounselingRequest counselingRequest = counselingRequestRepository.findById(counselingRequestNo)
+                .orElseThrow(() -> new RuntimeException("Counseling Request not found"));
+
+        return modelMapper.map(counselingRequest, CounselingRequestDetailsDTO.class);
     }
 }
