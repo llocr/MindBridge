@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -41,6 +42,7 @@ public class ClientService {
         counselingRequest.setMajor(member.getMajor());
         counselingRequest.setGender(member.getGender());
         counselingRequest.setStatus(ApprovalStatus.PENDING);
+        counselingRequest.setAppliedDateTime(LocalDateTime.now());
 
         counselingRequestRepository.save(counselingRequest);
     }

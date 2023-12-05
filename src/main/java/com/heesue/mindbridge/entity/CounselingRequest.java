@@ -51,4 +51,6 @@ public class CounselingRequest {
 
     @Enumerated(EnumType.STRING)
     private ApprovalStatus status;
+
+    private LocalDateTime appliedDateTime;
 }
