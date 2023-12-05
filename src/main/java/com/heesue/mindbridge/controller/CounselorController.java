@@ -26,6 +26,16 @@ import java.security.Principal;
 public class CounselorController {
     private final CounselorService counselorService;
 
+    //상담자 페이지 들어갈 때 상담 신청 건수 불러오기
+    @GetMapping("/counselor/home")
+    public String counselorHome(Principal loggedMember, Model model) {
+        Long counselingReqListCount = counselorService.findCounselingReqList(loggedMember);
+
+        model.addAttribute("requestCount", counselingReqListCount);
+
+        return "/counselor/home";
+    }
+
     //상담사 자격 신청 페이지
     @GetMapping("/member/apply")
     public String counselorApplyForm() {

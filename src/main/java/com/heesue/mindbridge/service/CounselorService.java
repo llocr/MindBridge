@@ -6,6 +6,7 @@ import com.heesue.mindbridge.DTO.Counselor.CounselorMainViewDTO;
 import com.heesue.mindbridge.DTO.Counselor.CounselorViewDTO;
 import com.heesue.mindbridge.DTO.CounselorBoard.CounselorBoardDTO;
 import com.heesue.mindbridge.entity.*;
+import com.heesue.mindbridge.repository.CounselingRequestRepository;
 import com.heesue.mindbridge.repository.CounselorBoardRepository;
 import com.heesue.mindbridge.repository.CounselorRepository;
 import com.heesue.mindbridge.repository.MemberRepository;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 public class CounselorService {
     private final CounselorRepository counselorRepository;
     private final CounselorBoardRepository counselorBoardRepository;
+    private final CounselingRequestRepository counselingRequestRepository;
     private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
 
@@ -102,11 +104,8 @@ public class CounselorService {
         CounselorBoard counselorBoard = modelMapper.map(counselorBoardDTO, CounselorBoard.class);
 
         String loggedMemberId = loggedMember.getName();
-        Member member = memberRepository.findById(loggedMemberId)
-                .orElseThrow(() -> new RuntimeException("Find Member not found"));
-        Counselor counselor = counselorRepository.findByCounselorId(member)
+        Counselor counselor = counselorRepository.findByMemberId(loggedMemberId)
                 .orElseThrow(() -> new RuntimeException("Counselor not found"));
-
 
         counselorBoard.setCounselor(counselor);
         counselorBoard.setCount(0L);
@@ -153,5 +152,16 @@ public class CounselorService {
         counselor.setLastModifiedDate(counselorBoard.getLastModifiedDate());
 
         return counselor;
+    }
+
+    //상담 신청 건수 조회
+    public Long findCounselingReqList(Principal loggedMember) {
+        String loggedMemberId = loggedMember.getName();
+        Counselor counselor = counselorRepository.findByMemberId(loggedMemberId)
+                .orElseThrow(() -> new RuntimeException("Counselor not found"));
+
+        Long count = counselingRequestRepository.countByCounselorAndStatus(counselor, ApprovalStatus.PENDING);
+
+        return count;
     }
 }
